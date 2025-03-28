@@ -9,7 +9,6 @@ namespace Calculator.S1m0n32002
         {
             Start,
             History,
-            UsageCounter,
             Exit,
             Yes,
             No,
@@ -19,7 +18,6 @@ namespace Calculator.S1m0n32002
         {
             {"[bold green]Start[/]" ,MenuOptions.Start },
             {"History"              ,MenuOptions.History },
-            {"Usage Counter"        ,MenuOptions.UsageCounter },
             {"[Yellow]Exit[/]"      ,MenuOptions.Exit },
             {"No :("                ,MenuOptions.Yes },
             {"No"                   ,MenuOptions.No },
@@ -113,12 +111,16 @@ namespace Calculator.S1m0n32002
                     { "[red]Clear History[/]"   ,HistoryOperations.ClearHistory },
                 };
 
-                var answer = AnsiConsole.Prompt(new SelectionPrompt<string>()
+                var prompt = new SelectionPrompt<string>()
                 {
                     Title = "History",
-                }
-                .AddChoices(strResultLog.Keys)
-                .AddChoiceGroup("Menu", strHistoryOperations.Keys));
+                };
+                if (c > 0)
+                    prompt.AddChoiceGroup($"Previous Operations: {c}", strResultLog.Keys);
+                
+                prompt.AddChoiceGroup("Menu", strHistoryOperations.Keys);
+
+                var answer = AnsiConsole.Prompt(prompt);
 
                 if (strResultLog.TryGetValue(answer, out var operationResult))
                 {
