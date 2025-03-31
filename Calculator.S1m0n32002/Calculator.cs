@@ -115,8 +115,11 @@ namespace Calculator.S1m0n32002
                 {
                     Title = "History",
                 };
+                
                 if (c > 0)
+                {
                     prompt.AddChoiceGroup($"Previous Operations: {c}", strResultLog.Keys);
+                }
                 
                 prompt.AddChoiceGroup("Menu", strHistoryOperations.Keys);
 
